@@ -2,6 +2,12 @@
 // To add a card: copy an entry, change the code, title, video URL and poster, then add the poster image next to this file.
 window.SHOP_URL = "https://www.etsy.com/shop/HeartfullyStore";
 window.CARDS = {
+  "lj9ryb0": {
+    title: "Happy Birthday, Grandma",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/lj9ryb0/video.mp4",
+    poster: "lj9ryb0.jpg",
+    theme: { accent: "#e6b85c" }
+  },
   "iju6ed2": {
     title: "Happy Birthday, Dad",
     video: "https://f003.backblazeb2.com/file/GreetingCards/iju6ed2/video.mp4",
