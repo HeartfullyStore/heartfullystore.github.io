@@ -91,5 +91,95 @@ window.CARDS = {
     video: "https://f003.backblazeb2.com/file/GreetingCards/s952k98/video.mp4",
     poster: "s952k98.jpg",
     theme: { accent: "#e6b85c" }
+  },
+  "mxm7ci9": {
+    title: "Happy New Year, Grandpa",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/mxm7ci9/video.mp4",
+    poster: "mxm7ci9.jpg",
+    theme: { accent: "#b8893e" }
+  },
+  "s68sp7a": {
+    title: "Happy New Year, Boss",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/s68sp7a/video.mp4",
+    poster: "s68sp7a.jpg",
+    theme: { accent: "#c9a45c" }
+  },
+  "llr4uad": {
+    title: "Happy New Year, Team",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/llr4uad/video.mp4",
+    poster: "llr4uad.jpg",
+    theme: { accent: "#e5b54a" }
+  },
+  "n9p5hyh": {
+    title: "Happy New Year, Coworker",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/n9p5hyh/video.mp4",
+    poster: "n9p5hyh.jpg",
+    theme: { accent: "#d0694a" }
+  },
+  "s29n9kx": {
+    title: "Happy New Year, Dear Teacher",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/s29n9kx/video.mp4",
+    poster: "s29n9kx.jpg",
+    theme: { accent: "#ff8c7a" }
+  },
+  "g49mtpz": {
+    title: "Happy New Year, Son",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/g49mtpz/video.mp4",
+    poster: "g49mtpz.jpg",
+    theme: { accent: "#d2423a" }
+  },
+  "ne0ende": {
+    title: "Happy New Year, Daughter",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/ne0ende/video.mp4",
+    poster: "ne0ende.jpg",
+    theme: { accent: "#b8a6e3" }
+  },
+  "r7e0j4o": {
+    title: "Happy New Year, Brother",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/r7e0j4o/video.mp4",
+    poster: "r7e0j4o.jpg",
+    theme: { accent: "#ff7a45" }
+  },
+  "45s8rd6": {
+    title: "Happy New Year, Sister",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/45s8rd6/video.mp4",
+    poster: "45s8rd6.jpg",
+    theme: { accent: "#d9a84e" }
+  },
+  "aehe1r1": {
+    title: "Happy New Year to You Both",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/aehe1r1/video.mp4",
+    poster: "aehe1r1.jpg",
+    theme: { accent: "#e9b7b0" }
+  },
+  "fgw2hqt": {
+    title: "Happy New Year, my Love",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/fgw2hqt/video.mp4",
+    poster: "fgw2hqt.jpg",
+    theme: { accent: "#e7a9a3" }
+  },
+  "ddso1au": {
+    title: "Happy New Year, my Husband",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/ddso1au/video.mp4",
+    poster: "ddso1au.jpg",
+    theme: { accent: "#e0a040" }
+  },
+  "wg95jmc": {
+    title: "Happy New Year, Uncle",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/wg95jmc/video.mp4",
+    poster: "wg95jmc.jpg",
+    theme: { accent: "#e3a82b" }
+  },
+  "bgxq589": {
+    title: "Happy New Year, Auntie",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/bgxq589/video.mp4",
+    poster: "bgxq589.jpg",
+    theme: { accent: "#e8d3a9" }
+  },
+  "coh30l8": {
+    title: "Happy New Year, dear Neighbors",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/coh30l8/video.mp4",
+    poster: "coh30l8.jpg",
+    theme: { accent: "#f5c46b" }
   }
 };
