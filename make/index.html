@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#faf6ef">
+<title>Make Your Card · HeartfullyStore</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:LoraX;src:url('fonts/Lora-Variable.ttf') format('truetype');font-weight:400 700;font-style:normal;font-display:block}
+@font-face{font-family:LoraX;src:url('fonts/Lora-Italic-Variable.ttf') format('truetype');font-weight:400 700;font-style:italic;font-display:block}
+:root{
+  --bg:#faf6ef;--paper:#fffdf9;--ink:#3b2230;--muted:#7a6670;--line:#eadfd3;--accent:#8f2f4a;--accent-ink:#fff;
+  --gold:#b8862f;--ok:#2f6a4a;--warn:#9a5a12;--err:#a12f3c;--shadow:0 1px 2px rgba(60,30,40,.06),0 8px 28px rgba(60,30,40,.08);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,.serif{font-family:LoraX,Georgia,serif}
+a{color:var(--accent)}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 16px 64px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+header .logo{height:40px;padding:0 12px;border-radius:20px;background:var(--paper);display:grid;place-items:center;box-shadow:var(--shadow);font:600 13px LoraX,Georgia,serif;color:#471d33;white-space:nowrap;letter-spacing:-.02em}
+header .logo b{color:#b89897;font-weight:600}
+header .shop{font:600 15px LoraX,Georgia,serif;letter-spacing:.02em}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:18px 0 6px;font-weight:600}
+.lead{color:var(--muted);margin:0 0 24px;max-width:60ch}
+.step{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;margin:0 0 16px;box-shadow:var(--shadow)}
+.step.locked{opacity:.5;pointer-events:none;box-shadow:none}
+.step h2{font-size:21px;margin:0 0 4px;font-weight:600;display:flex;align-items:center;gap:10px}
+.num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:600 14px system-ui,sans-serif}
+.step.done .num{background:var(--ok)}
+.hint{color:var(--muted);font-size:14px;margin:2px 0 14px}
+label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+input[type=text],select,textarea{width:100%;font:inherit;color:inherit;background:#fff;border:1px solid #dccfc2;border-radius:10px;padding:11px 12px;outline:none}
+input[type=text]:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(143,47,74,.15)}
+textarea{min-height:150px;resize:vertical;line-height:1.45}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row>*{flex:1 1 auto}
+button{font:600 16px system-ui,sans-serif;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;background:var(--accent);color:var(--accent-ink);min-height:46px}
+button.ghost{background:transparent;color:var(--accent);border:1px solid #d8c4c9}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible{outline:3px solid rgba(143,47,74,.35);outline-offset:2px}
+.msg{font-size:14px;margin-top:10px;min-height:1em}
+.msg.err{color:var(--err)} .msg.ok{color:var(--ok)} .msg.warn{color:var(--warn)}
+#codeIn{font:600 20px ui-monospace,Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;max-width:280px}
+.design{display:grid;grid-template-columns:1fr;gap:22px}
+@media(min-width:860px){.design{grid-template-columns:minmax(0,1fr) 400px}}
+.themes{display:flex;gap:10px;flex-wrap:wrap}
+.sw{width:54px;height:54px;border-radius:14px;border:2px solid transparent;padding:0;background:none;min-height:0;cursor:pointer;position:relative}
+.sw span{position:absolute;inset:4px;border-radius:10px}
+.sw[aria-pressed=true]{border-color:var(--ink)}
+.sw small{position:absolute;left:0;right:0;bottom:-20px;font:500 11px system-ui,sans-serif;color:var(--muted);text-align:center}
+.themes{margin-bottom:26px}
+.preview{position:sticky;top:12px;align-self:start}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs button{flex:1;min-height:38px;padding:6px 10px;font-size:14px;background:#f2e9e1;color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:#fff}
+.pv{width:100%;aspect-ratio:5/7;border-radius:6px;background:#efe6da;box-shadow:0 2px 6px rgba(0,0,0,.08),0 16px 40px rgba(60,30,40,.16);display:block}
+.drop{border:2px dashed #d8c4c9;border-radius:16px;padding:26px 16px;text-align:center;background:#fffaf6;cursor:pointer}
+.drop.hover{border-color:var(--accent);background:#fff3f3}
+.drop strong{display:block;font-size:17px;margin-bottom:4px}
+.bar{height:10px;border-radius:6px;background:#f0e5dc;overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),#c2557a);transition:width .25s}
+.vbox{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-top:12px}
+.vbox video{width:160px;max-height:280px;border-radius:12px;background:#000}
+.dl{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:700px){.dl{grid-template-columns:1fr 1fr}}
+.dlc{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+.dlc h3{margin:0 0 2px;font:600 17px LoraX,Georgia,serif}
+.dlc p{margin:0 0 10px;color:var(--muted);font-size:14px}
+.dlc .row button{flex:1 1 140px}
+.tag{display:inline-block;font:600 11px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.tips{font-size:14px;color:var(--muted);margin:14px 0 0;padding-left:18px}
+.tips li{margin:3px 0}
+.ok-ic{color:var(--ok);font-weight:700}
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:28px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.busy{position:fixed;inset:0;background:rgba(250,246,239,.82);display:none;place-items:center;z-index:9;font:600 18px LoraX,Georgia,serif;text-align:center;padding:16px}
+.busy.on{display:grid}
+</style>
+</head>
+<body>
+<div class="busy" id="busy" role="status" aria-live="polite"><div><div id="busyT">Making your card…</div><div class="hint" style="margin-top:6px">This takes a few seconds.</div></div></div>
+<div class="wrap">
+  <header><div class="logo" aria-hidden="true">H<b>&#9829;</b>S</div><div class="shop">HeartfullyStore</div></header>
+  <div id="demoBar" hidden style="background:#fff3d6;border:1px solid #ecd39a;border-radius:12px;padding:10px 14px;font-size:14px;margin:8px 0">Preview mode: nothing is uploaded. The QR on the card opens a sample video.</div>
+  <h1>Make your video card</h1>
+  <p class="lead">Design the card, add your own video, and download a printable PDF with a QR code. When they scan it, your video plays. It takes about 5 minutes.</p>
+
+  <!-- 1 code -->
+  <section class="step" id="s1" aria-labelledby="h1t">
+    <h2 id="h1t"><span class="num">1</span>Enter your activation code</h2>
+    <p class="hint">You'll find it in the file you downloaded from Etsy (it starts with HF).</p>
+    <div class="row" style="max-width:460px">
+      <input type="text" id="codeIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="HF…" aria-label="Activation code" maxlength="14">
+      <button id="codeBtn" style="flex:0 0 auto">Continue</button>
+    </div>
+    <div class="msg" id="codeMsg" role="status"></div>
+  </section>
+
+  <!-- 2 design -->
+  <section class="step locked" id="s2" aria-labelledby="h2t">
+    <h2 id="h2t"><span class="num">2</span>Design your card</h2>
+    <p class="hint">Changes show up in the preview right away.</p>
+    <div class="design">
+      <div>
+        <label id="thLbl">Color theme</label>
+        <div class="themes" role="group" aria-labelledby="thLbl" id="themes"></div>
+        <label for="occ" style="margin-top:28px">Occasion</label>
+        <select id="occ"></select>
+        <div id="occOtherWrap" hidden><label for="occOther">Your greeting</label><input type="text" id="occOther" maxlength="28" placeholder="e.g. Happy Retirement,"></div>
+        <label for="name">Their name</label>
+        <input type="text" id="name" maxlength="22" placeholder="e.g. Grandma Rose" autocomplete="off">
+        <label for="sub">Line under the name <span class="hint">(front of the folded card)</span></label>
+        <input type="text" id="sub" maxlength="40" placeholder="with all our love">
+        <label for="msgT">Message inside <span class="hint">(up to 8 short lines)</span></label>
+        <textarea id="msgT" rows="6"></textarea>
+        <label for="sign">Closing line inside</label>
+        <input type="text" id="sign" maxlength="40">
+      </div>
+      <div class="preview">
+        <div class="tabs" role="tablist" aria-label="Preview">
+          <button role="tab" aria-selected="true" data-l="cover">Front</button>
+          <button role="tab" aria-selected="false" data-l="inside">Inside</button>
+          <button role="tab" aria-selected="false" data-l="flat">Flat card</button>
+        </div>
+        <canvas class="pv" id="pv" width="500" height="700" aria-label="Card preview"></canvas>
+        <p class="hint" style="margin-top:8px">The QR code in the preview is a sample. Your real one is added when you download.</p>
+      </div>
+    </div>
+    <div class="row" style="margin-top:16px"><button id="designBtn" style="flex:0 0 auto">Next: add your video</button></div>
+  </section>
+
+  <!-- 3 video -->
+  <section class="step locked" id="s3" aria-labelledby="h3t">
+    <h2 id="h3t"><span class="num">3</span>Add your video</h2>
+    <p class="hint">MP4 or MOV, up to 200 MB. Record it on your phone, then pick it here.</p>
+    <div id="vPick">
+      <label class="drop" id="drop" for="file"><strong>Choose your video</strong><span class="hint">or drag it here</span></label>
+      <input type="file" id="file" accept="video/mp4,video/quicktime,.mp4,.mov,.m4v" class="sr">
+    </div>
+    <div class="bar" id="bar" hidden><i id="barI"></i></div>
+    <div class="msg" id="vMsg" role="status" aria-live="polite"></div>
+    <div class="vbox" id="vDone" hidden>
+      <video id="vPrev" controls playsinline preload="metadata"></video>
+      <div><p style="margin:0 0 8px"><span class="ok-ic">&#10003;</span> Your video is saved. This is what they'll see when they scan the card.</p>
+        <button class="ghost" id="replaceBtn">Use a different video</button></div>
+    </div>
+  </section>
+
+  <!-- 4 download -->
+  <section class="step locked" id="s4" aria-labelledby="h4t">
+    <h2 id="h4t"><span class="num">4</span>Download and print</h2>
+    <p class="hint">Pick the size you want. You can come back later with the same code to download again.</p>
+    <div class="dl">
+      <div class="dlc"><span class="tag">Most popular · fold in half</span><h3>5×7 in folded card</h3><p>2 pages, 10×7 in. Print double-sided, flip on the short edge, fold in half.</p>
+        <div class="row"><button data-pdf="sheet57">Download PDF</button></div></div>
+      <div class="dlc"><span class="tag">Fold in half</span><h3>4×6 in folded card</h3><p>2 pages, 8×6 in. Print double-sided, fold in half.</p>
+        <div class="row"><button data-pdf="sheet46">Download PDF</button></div></div>
+      <div class="dlc"><span class="tag">Print shop / photo print</span><h3>5×7 in single pages</h3><p>Front + inside as separate 5×7 pages, or one flat card with the QR on the front.</p>
+        <div class="row"><button class="ghost" data-pdf="fold57">Front + inside</button><button class="ghost" data-pdf="flat57">Flat card</button></div></div>
+      <div class="dlc"><span class="tag">Print shop / photo print</span><h3>4×6 in single pages</h3><p>Front + inside as separate 4×6 pages, or one flat card.</p>
+        <div class="row"><button class="ghost" data-pdf="fold46">Front + inside</button><button class="ghost" data-pdf="flat46">Flat card</button></div></div>
+    </div>
+    <div class="msg" id="dlMsg" role="status"></div>
+    <div id="demoOut" hidden style="display:grid;gap:12px;margin-top:12px"></div>
+    <ul class="tips">
+      <li>Print at <b>100% / Actual size</b>, not "Fit to page". Card stock (200–300 gsm) looks best.</li>
+      <li>Scan the printed QR once with your phone before you give the card.</li>
+      <li>Want to check the video page now? <a id="testLink" href="#" target="_blank" rel="noopener">Open it here</a>.</li>
+    </ul>
+  </section>
+
+  <footer>Made with love by HeartfullyStore · Need help? Message us on Etsy.</footer>
+</div>
+
+<script src="vendor/qrcode-generator-2.0.4.js"></script>
+<script src="vendor/jspdf-2.5.1.umd.min.js"></script>
+<script src="engine.js"></script>
+<script>
+(function(){
+  "use strict";
+  var API = "https://heartfully-builder.yaronb87.workers.dev";
+  var LANDING = "https://heartfullystore.github.io/";
+  var MAX = 200*1024*1024;
+  var $ = function(id){ return document.getElementById(id); };
+  var E = window.CardEngine;
+
+  var OCC = ["Happy Birthday,","Happy Anniversary,","Merry Christmas,","Happy New Year,","Happy Mother's Day,","Happy Father's Day,","Happy Valentine's Day,","Congratulations,","Thank You,","Happy Graduation,","Get Well Soon,","Happy Retirement,","With Love,"];
+  var THEME_NAMES = {rose:"Rose",navy:"Navy",wine:"Wine",green:"Holly",lavender:"Lilac"};
+
+  // ---------- state (remembered on this device only) ----------
+  var st = { code:"", status:"", vid:null, theme:"rose", occ:OCC[0], occOther:"", name:"", sub:"", msg:E.DEFAULT_MSG.join("\n"), sign:"", signEdited:false, sharedKey:"", child:"" };
+  function save(){ try{ localStorage.setItem("hf_make", JSON.stringify(st)); }catch(e){} }
+  try{ var s0 = JSON.parse(localStorage.getItem("hf_make")||"null"); if(s0) for(var k in s0) if(k in st) st[k]=s0[k]; }catch(e){}
+
+  function g1(){ var v = st.occ==="__other" ? (st.occOther||"").trim() : st.occ; if(!v) v="Happy Birthday,"; return v; }
+  function nm(){ return (st.name||"").trim() || "Friend"; }
+  function autoSign(){ return g1().replace(/,\s*$/,"") + ", " + nm() + "!"; }
+  function signTxt(){ return st.signEdited && st.sign.trim() ? st.sign.trim() : autoSign(); }
+  function msgLines(){ var L = (st.msg||"").split(/\r?\n/).map(function(s){return s.trim();}); while(L.length && !L[L.length-1]) L.pop(); return L.slice(0,8); }
+  function title(){ return (g1().replace(/,\s*$/,"") + ", " + nm()).slice(0,60); }
+  var DEMO = new URLSearchParams(location.search).get("demo")==="1" || !/heartfullystore\.github\.io|127\.0\.0\.1|localhost/.test(location.hostname);
+  var DEMO_URL = LANDING + "?c=lj9ryb0";
+  function qrUrl(){ if(DEMO) return DEMO_URL; return LANDING + "?v=" + (st.vid||"rpreview") + "&t=" + encodeURIComponent(title()); }
+  function opts(layout,w,h,qrpx,qr){ return { w:w, h:h, qrpx:qrpx, layout:layout, theme:st.theme, name:nm(), g1:g1(), sub:(st.sub||"").trim()||"with all our love", msg:msgLines(), sign:signTxt(), qr:qr }; }
+
+  function setStep(n){
+    for(var i=1;i<=4;i++){ var el=$("s"+i); el.classList.toggle("locked", i>n); el.classList.toggle("done", i<n || (i===3 && !!st.vid && n>=3)); }
+  }
+  function busy(on,t){ $("busy").classList.toggle("on",!!on); if(t) $("busyT").textContent=t; }
+  function msg(id,t,cls){ var m=$(id); m.textContent=t||""; m.className="msg"+(cls?" "+cls:""); }
+
+  async function api(path, body){
+    var r = await fetch(API+path, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body) });
+    var j = {}; try{ j = await r.json(); }catch(e){}
+    j.httpStatus = r.status; return j;
+  }
+
+  // ---------- step 1: code ----------
+  var urlCode = new URLSearchParams(location.search).get("code");
+  $("codeIn").value = (urlCode || st.code || "").toUpperCase();
+  async function checkCode(){
+    var c = $("codeIn").value.trim().toUpperCase().replace(/[^A-Z0-9]/g,"");
+    if(c.length<6){ msg("codeMsg","Please type the code from your Etsy download.","err"); return; }
+    $("codeBtn").disabled=true; msg("codeMsg","Checking…");
+    try{
+      var j = await api("/code",{code:c});
+      if(!j.ok){ msg("codeMsg", j.httpStatus===404 ? "We couldn't find that code. Check it and try again, or message us on Etsy." : "Something went wrong. Please try again in a minute.","err"); return; }
+      if(j.shared){
+        // one link for all buyers: this device may already have its own private slot
+        var mine = (st.sharedKey===c && st.child) ? await api("/code",{code:st.child}) : null;
+        if(mine && mine.ok){ st.code=st.child; st.status=mine.status; st.vid=mine.vid||null; }
+        else { st.sharedKey=c; st.child=""; st.code=c; st.status="new"; st.vid=null; }
+      } else {
+        if(st.code!==c){ st.vid=null; }
+        st.code=c; st.status=j.status; st.vid=j.vid||null;
+      }
+      save();
+      msg("codeMsg", j.status==="used" ? "Welcome back. Your video is saved, so you can change the design and download again." : "You're all set. Let's make your card.", "ok");
+      $("s1").classList.add("done");
+      setStep(st.vid ? 4 : 2);
+      showVideoState(); drawPreview();
+      if(!urlCode || st.vid) $("s2").scrollIntoView({behavior:"smooth",block:"start"});
+    }catch(e){ msg("codeMsg","Can't reach the server. Check your internet connection and try again.","err"); }
+    finally{ $("codeBtn").disabled=false; }
+  }
+  $("codeBtn").addEventListener("click",checkCode);
+  $("codeIn").addEventListener("keydown",function(e){ if(e.key==="Enter") checkCode(); });
+
+  // ---------- step 2: design ----------
+  Object.keys(E.THEMES).forEach(function(k){
+    var T=E.THEMES[k], b=document.createElement("button");
+    b.className="sw"; b.type="button"; b.dataset.t=k; b.setAttribute("aria-pressed", String(st.theme===k)); b.setAttribute("aria-label",THEME_NAMES[k]+" theme");
+    b.innerHTML='<span style="background:linear-gradient(135deg,'+T.bg[0]+' 0 38%,'+T.pet[0]+' 38% 62%,'+T.leaf[1]+' 62% 82%,'+T.ink+' 82%)"></span><small>'+THEME_NAMES[k]+'</small>';
+    b.addEventListener("click",function(){ st.theme=k; document.querySelectorAll(".sw").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.t===k));}); changed(); });
+    $("themes").appendChild(b);
+  });
+  OCC.forEach(function(o){ var op=document.createElement("option"); op.value=o; op.textContent=o.replace(/,$/,""); $("occ").appendChild(op); });
+  var oo=document.createElement("option"); oo.value="__other"; oo.textContent="Something else…"; $("occ").appendChild(oo);
+  $("occ").value = st.occ; if($("occ").value!==st.occ){ st.occ=OCC[0]; $("occ").value=st.occ; }
+  $("occOther").value=st.occOther; $("name").value=st.name; $("sub").value=st.sub; $("msgT").value=st.msg;
+  $("occOtherWrap").hidden = st.occ!=="__other";
+  function syncSign(){ if(!st.signEdited) $("sign").value=autoSign(); }
+  $("sign").value = st.signEdited ? st.sign : autoSign();
+  $("occ").addEventListener("change",function(){ st.occ=this.value; $("occOtherWrap").hidden = st.occ!=="__other"; syncSign(); changed(); });
+  $("occOther").addEventListener("input",function(){ st.occOther=this.value; syncSign(); changed(); });
+  $("occOther").addEventListener("blur",function(){ var v=this.value.trim(); if(v && !/[,!.]$/.test(v)){ v+=","; this.value=v; st.occOther=v; syncSign(); changed(); } });
+  $("name").addEventListener("input",function(){ st.name=this.value; syncSign(); changed(); });
+  $("sub").addEventListener("input",function(){ st.sub=this.value; changed(); });
+  $("msgT").addEventListener("input",function(){ st.msg=this.value; changed(); });
+  $("sign").addEventListener("input",function(){ st.sign=this.value; st.signEdited = this.value.trim()!=="" && this.value!==autoSign(); changed(); });
+
+  var pvLayout="cover", pvTimer=null, pvQR=null, pvQRUrl="";
+  document.querySelectorAll(".tabs button").forEach(function(b){
+    b.addEventListener("click",function(){ pvLayout=b.dataset.l; document.querySelectorAll(".tabs button").forEach(function(x){x.setAttribute("aria-selected",String(x===b));}); drawPreview(); });
+  });
+  function drawPreview(){
+    var key=qrUrl()+"|"+st.theme; if(key!==pvQRUrl){ pvQR=E.qrCanvas(qrUrl(),E.THEMES[st.theme].qr); pvQRUrl=key; }
+    var w=Math.round(Math.min(1500, Math.max(500, $("pv").clientWidth*(window.devicePixelRatio||1)))) ;
+    w = w - (w%5); var h = w/5*7;
+    E.render($("pv"), opts(pvLayout, w, h, 345*w/1500, pvLayout==="cover"?null:pvQR));
+  }
+  function changed(){ save(); clearTimeout(pvTimer); pvTimer=setTimeout(drawPreview,90); }
+  window.addEventListener("resize",function(){ clearTimeout(pvTimer); pvTimer=setTimeout(drawPreview,200); });
+  $("designBtn").addEventListener("click",function(){
+    if(!(st.name||"").trim()){ $("name").focus(); $("name").setAttribute("aria-invalid","true"); return; }
+    $("name").removeAttribute("aria-invalid");
+    setStep(st.vid?4:3); $(st.vid?"s4":"s3").scrollIntoView({behavior:"smooth",block:"start"});
+  });
+
+  // ---------- step 3: video ----------
+  function showVideoState(){
+    var has=!!st.vid && (st.status==="uploaded"||st.status==="used");
+    $("vDone").hidden=!has; $("vPick").hidden=has;
+    $("replaceBtn").hidden = st.status==="used";
+    if(has && !DEMO){ var src=API+"/v/"+st.vid+"/video.mp4"; if($("vPrev").getAttribute("src")!==src) $("vPrev").src=src; }
+    $("testLink").href = qrUrl();
+  }
+  $("replaceBtn").addEventListener("click",function(){ $("vDone").hidden=true; $("vPick").hidden=false; $("file").click(); });
+  var drop=$("drop");
+  ["dragenter","dragover"].forEach(function(ev){ drop.addEventListener(ev,function(e){e.preventDefault(); drop.classList.add("hover");}); });
+  ["dragleave","drop"].forEach(function(ev){ drop.addEventListener(ev,function(e){e.preventDefault(); drop.classList.remove("hover");}); });
+  drop.addEventListener("drop",function(e){ var f=e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) handleFile(f); });
+  $("file").addEventListener("change",function(){ var f=this.files&&this.files[0]; if(f) handleFile(f); this.value=""; });
+
+  function fourcc(buf){ var s=""; var u=new Uint8Array(buf); for(var i=0;i<u.length;i++){ var c=u[i]; s+= (c>31&&c<127)?String.fromCharCode(c):"."; } return s; }
+  async function codecOf(f){
+    try{
+      var a = await f.slice(0, Math.min(f.size, 4<<20)).arrayBuffer();
+      var b = f.size>(4<<20) ? await f.slice(Math.max(0,f.size-(4<<20))).arrayBuffer() : new ArrayBuffer(0);
+      var s = fourcc(a)+fourcc(b);
+      if(/hvc1|hev1/.test(s)) return "hevc"; if(/avc1|avc3/.test(s)) return "h264"; return "";
+    }catch(e){ return ""; }
+  }
+  function mb(n){ return (n/1048576).toFixed(n<10485760?1:0)+" MB"; }
+
+  async function handleFile(f){
+    var ext=(f.name.split(".").pop()||"").toLowerCase();
+    var okType = ["video/mp4","video/quicktime"].indexOf(f.type)>=0 || (!f.type && ["mp4","mov","m4v"].indexOf(ext)>=0) || ["mp4","mov","m4v"].indexOf(ext)>=0;
+    if(!okType){ msg("vMsg","Please choose an MP4 or MOV video file.","err"); return; }
+    if(f.size>MAX){ msg("vMsg","This video is "+mb(f.size)+". The limit is 200 MB. Please trim it or record a shorter one.","err"); return; }
+    if(f.size<20000){ msg("vMsg","This file looks empty. Please choose another video.","err"); return; }
+    if(DEMO){ st.vid="demo"; st.status="uploaded"; $("vPrev").src=URL.createObjectURL(f); $("vDone").hidden=false; $("vPick").hidden=true; $("replaceBtn").hidden=false; msg("vMsg","Preview mode: your video stays on this device.","ok"); setStep(4); setTimeout(function(){ $("s4").scrollIntoView({behavior:"smooth",block:"start"}); },300); return; }
+    var codec = await codecOf(f);
+    var note = codec==="hevc" ? " Note: this video uses the HEVC format. It plays on iPhones and most newer phones, but some older Android phones may not play it. For the widest support, on iPhone go to Settings › Camera › Formats › Most Compatible, then record again." : "";
+    await upload(f, note);
+  }
+
+  function putPart(url, blob, onProg){
+    return new Promise(function(res,rej){
+      var x=new XMLHttpRequest(); x.open("PUT",url); x.setRequestHeader("Content-Type","application/octet-stream");
+      x.upload.onprogress=function(e){ if(e.lengthComputable) onProg(e.loaded); };
+      x.onload=function(){ var j={}; try{ j=JSON.parse(x.responseText);}catch(e){} if(x.status===200&&j.ok) res(j.part); else rej(new Error("part "+x.status)); };
+      x.onerror=function(){ rej(new Error("network")); };
+      x.send(blob);
+    });
+  }
+  var uploading=false;
+  async function upload(f, note){
+    if(uploading) return; uploading=true;
+    $("bar").hidden=false; $("barI").style.width="0%"; msg("vMsg","Starting upload…");
+    var type = ["video/mp4","video/quicktime"].indexOf(f.type)>=0 ? f.type : "";
+    try{
+      var s = await api("/upload/start",{code:st.code,size:f.size,type:type});
+      if(!s.ok){ throw new Error(s.error==="used"?"used":s.error==="size"?"size":s.error==="busy"?"busy":"start"); }
+      if(s.code){ st.code=s.code; st.child=s.code; save(); }
+      var PB=s.partBytes, n=Math.ceil(f.size/PB), parts=[], doneBytes=0;
+      for(var i=0;i<n;i++){
+        var blob=f.slice(i*PB, Math.min(f.size,(i+1)*PB)), tries=0, part=null;
+        while(!part){
+          try{
+            part = await putPart(API+"/upload/part?code="+encodeURIComponent(st.code)+"&uploadId="+encodeURIComponent(s.uploadId)+"&n="+(i+1), blob, function(l){
+              var p=Math.min(99,(doneBytes+l)/f.size*100); $("barI").style.width=p.toFixed(1)+"%"; msg("vMsg","Uploading… "+Math.floor(p)+"%  ("+mb(doneBytes+l)+" of "+mb(f.size)+"). Please keep this page open.");
+            });
+          }catch(e){ if(++tries>=3) throw e; msg("vMsg","Connection hiccup, retrying…","warn"); await new Promise(function(r){setTimeout(r,1500*tries);}); }
+        }
+        parts.push(part); doneBytes+=blob.size;
+      }
+      var c = await api("/upload/complete",{code:st.code,uploadId:s.uploadId,parts:parts});
+      if(!c.ok) throw new Error("complete");
+      st.vid=c.vid; st.status="uploaded"; save();
+      $("barI").style.width="100%"; msg("vMsg","Upload complete."+note, note?"warn":"ok");
+      $("bar").hidden=true; showVideoState(); pvQRUrl=""; drawPreview();
+      setStep(4); setTimeout(function(){ $("s4").scrollIntoView({behavior:"smooth",block:"start"}); },400);
+    }catch(e){
+      var m = e.message==="used" ? "This code has already been used for a finished card." : e.message==="size" ? "This video is too large (max 200 MB)." : e.message==="busy" ? "We're getting a lot of uploads today. Please try again tomorrow, or message us on Etsy and we'll help right away." : "The upload didn't finish. Check your connection and choose the video again.";
+      msg("vMsg",m,"err"); $("bar").hidden=true;
+    }finally{ uploading=false; }
+  }
+
+  // ---------- step 4: PDFs ----------
+  var SPEC = {
+    sheet57:{ w:1500,h:2100,q:345, pages:[["back","cover"],["insideleft","inside"]], name:"5x7_folded_card_10x7_sheet" },
+    sheet46:{ w:1200,h:1800,q:310, pages:[["back","cover"],["insideleft","inside"]], name:"4x6_folded_card_8x6_sheet" },
+    fold57:{ w:1500,h:2100,q:345, pages:[["cover"],["inside"]], name:"5x7_front_and_inside" },
+    flat57:{ w:1500,h:2100,q:345, pages:[["flat"]], name:"5x7_flat_card" },
+    fold46:{ w:1200,h:1800,q:310, pages:[["cover"],["inside"]], name:"4x6_front_and_inside" },
+    flat46:{ w:1200,h:1800,q:310, pages:[["flat"]], name:"4x6_flat_card" }
+  };
+  // artwork as JPEG; the QR area is left blank in the image and drawn as vector squares on top
+  function panelJPEG(layout,sp,qr){
+    var c=document.createElement("canvas"), hasQR=(layout==="inside"||layout==="flat");
+    var o=opts(layout, sp.w, sp.h, sp.q, null); if(hasQR) o.qrW=qr.canvas.width;
+    var info=E.render(c, o);
+    var d=c.toDataURL("image/jpeg",0.95); c.width=c.height=1; return { data:d, info:info, hasQR:hasQR };
+  }
+  function vectorQR(doc, qr, info, sp, x0){
+    // same geometry as the canvas engine: image drawn into frame+8 .. frameU-16 (units), units -> inches = u*S/300
+    var S=sp.w/1500, k=S/300, f=info.qrFrame, inner=(f[2]-16)*k, ox=x0+(f[0]+8)*k, oy=(f[1]+8)*k;
+    var n=qr.m.n, tot=n+8, mod=inner/tot, hex=E.THEMES[st.theme].qr;
+    doc.setFillColor(255,255,255); doc.rect(ox,oy,inner,inner,"F");
+    doc.setFillColor(parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16));
+    for(var r=0;r<n;r++){ var c=0; while(c<n){ if(qr.m.dark(r,c)){ var s=c; while(c<n && qr.m.dark(r,c)) c++; doc.rect(ox+(s+4)*mod, oy+(r+4)*mod, (c-s)*mod+0.0005, mod+0.0005, "F"); } else c++; } }
+  }
+  async function buildPDF(key){
+    var sp=SPEC[key], u=qrUrl(), qr={ canvas:E.qrCanvas(u, E.THEMES[st.theme].qr), m:E.qrMatrix(u) };
+    var pw=sp.w/300, ph=sp.h/300, cols=sp.pages[0].length, W=pw*cols;
+    var doc=new window.jspdf.jsPDF({ unit:"in", format:[W,ph], orientation: W>ph?"landscape":"portrait", compress:true });
+    doc.setProperties({ title:"Card for "+nm()+" · HeartfullyStore", creator:"HeartfullyStore" });
+    for(var p=0;p<sp.pages.length;p++){
+      if(p) doc.addPage([W,ph], W>ph?"landscape":"portrait");
+      for(var k=0;k<cols;k++){
+        await new Promise(function(r){ setTimeout(r,0); });
+        var pj=panelJPEG(sp.pages[p][k],sp,qr);
+        doc.addImage(pj.data,"JPEG",k*pw,0,pw,ph,undefined,"NONE");
+        if(pj.hasQR) vectorQR(doc,qr,pj.info,sp,k*pw);
+      }
+    }
+    return doc;
+  }
+  function fileSafe(s){ return s.replace(/[^\w\- ]+/g,"").trim().replace(/\s+/g,"_").slice(0,30)||"card"; }
+  document.querySelectorAll("[data-pdf]").forEach(function(b){
+    b.addEventListener("click", async function(){
+      if(!st.vid){ msg("dlMsg","Please add your video first (step 3).","err"); return; }
+      busy(true,"Making your card…");
+      try{
+        await E.fontsReady();
+        if(DEMO){
+          var sp=SPEC[b.dataset.pdf], qr={canvas:E.qrCanvas(qrUrl(),E.THEMES[st.theme].qr)}, out=$("demoOut"); out.innerHTML=""; out.hidden=false;
+          sp.pages.forEach(function(pg,i){ var row=document.createElement("div"); row.style.cssText="display:flex;gap:0;box-shadow:0 8px 28px rgba(60,30,40,.18);border-radius:4px;overflow:hidden";
+            pg.forEach(function(L){ var c=document.createElement("canvas"); E.render(c, opts(L, sp.w/2, sp.h/2, sp.q/2, (L==="inside"||L==="flat")?qr.canvas:null)); c.style.cssText="width:"+(100/pg.length)+"%;height:auto;display:block"; row.appendChild(c); });
+            var cap=document.createElement("div"); cap.className="hint"; cap.textContent=(sp.pages.length>1?"Page "+(i+1)+" of the PDF":"The PDF"); out.appendChild(cap); out.appendChild(row); });
+          msg("dlMsg","Preview mode shows the pages here. The real page downloads them as a PDF.","ok"); out.scrollIntoView({behavior:"smooth",block:"start"}); return;
+        }
+        var doc = await buildPDF(b.dataset.pdf);
+        var fn = "Heartfully_"+fileSafe(nm())+"_"+SPEC[b.dataset.pdf].name+".pdf";
+        if(window.__HF_TEST) window.__lastPDF = { name:fn, data: doc.output("datauristring") };
+        doc.save(fn);
+        msg("dlMsg","Downloaded "+fn+".","ok");
+        if(!DEMO && st.status!=="used"){ var d=await api("/done",{code:st.code}); if(d.ok){ st.status="used"; save(); showVideoState(); } }
+      }catch(e){ msg("dlMsg","Sorry, the PDF couldn't be made on this device. Please try again or use a computer.","err"); console.error(e); }
+      finally{ busy(false); }
+    });
+  });
+
+  // ---------- start ----------
+  E.fontsReady().then(drawPreview);
+  showVideoState();
+  if(DEMO){
+    $("demoBar").hidden=false; $("s1").hidden=true; st.code="DEMO"; st.vid=null; st.status="";
+    if(!st.name){ st.name="Grandma"; $("name").value="Grandma"; syncSign(); }
+    $("h2t").querySelector(".num").textContent="1"; $("h3t").querySelector(".num").textContent="2"; $("h4t").querySelector(".num").textContent="3";
+    setStep(2); $("vDone").hidden=true; $("vPick").hidden=false; $("testLink").href=DEMO_URL;
+  } else if(urlCode){
+    // code came in the link: no typing, step 1 collapses to one line
+    $("codeIn").parentNode.hidden=true; $("s1").querySelector(".hint").hidden=true; $("h1t").lastChild.textContent="Your order";
+    checkCode();
+  } else if($("codeIn").value) checkCode();
+})();
+</script>
+</body>
+</html>
