@@ -204,6 +204,11 @@ video{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; b
   // which card? ?c=code   (also accepts #code or ?code)
   var q=new URLSearchParams(location.search), code=(q.get("c")||location.hash.replace("#","")||[].concat(Array.from(q.keys()))[0]||"").trim().toLowerCase();
   var card=(window.CARDS||{})[code];
+  // self-serve builder videos (Cloudflare R2 via the Worker): ?v=r123abc&t=Title
+  var vid=(q.get("v")||"").trim().toLowerCase();
+  if(/^r[a-z0-9]{6}$/.test(vid)){
+    card={title:(q.get("t")||"").slice(0,60)||"A message just for you", video:"https://heartfully-builder.yaronb87.workers.dev/v/"+vid+"/video.mp4", poster:"", theme:{}};
+  }
   // personalized orders: any 7-character code has its video at the standard address, title from ?t=
   if(!card && /^[a-z0-9]{7}$/.test(code)){
     var t=(q.get("t")||"").slice(0,60);
