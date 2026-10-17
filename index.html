@@ -193,7 +193,7 @@ video{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; b
   </footer>
 </div>
 
-<script src="cards.js"></script>
+<script>document.write('<script src="cards.js?v='+Math.floor(Date.now()/60000)+'"><\/script>')</script>
 <script>
 (function(){
   var $=function(id){return document.getElementById(id)};
@@ -204,6 +204,11 @@ video{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; b
   // which card? ?c=code   (also accepts #code or ?code)
   var q=new URLSearchParams(location.search), code=(q.get("c")||location.hash.replace("#","")||[].concat(Array.from(q.keys()))[0]||"").trim().toLowerCase();
   var card=(window.CARDS||{})[code];
+  // personalized orders: any 7-character code has its video at the standard address, title from ?t=
+  if(!card && /^[a-z0-9]{7}$/.test(code)){
+    var t=(q.get("t")||"").slice(0,60);
+    card={title:t||"A message just for you", video:"https://f003.backblazeb2.com/file/GreetingCards/"+code+"/video.mp4", poster:"", theme:{}};
+  }
 
   function setState(cls){frame.classList.remove("playing","paused","ended","failed","missing"); if(cls) frame.classList.add(cls)}
   function showNote(cls,title,text,canRetry){
