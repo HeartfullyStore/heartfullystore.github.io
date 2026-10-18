@@ -128,6 +128,25 @@ video{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; b
   .open .seal{animation:none; transition:none}
   .open,.bar,.glyph,.shop{transition:none}
 }
+
+/* ---------- builder cards (?v=): the Atelier look + the 3D opening shot ---------- */
+body.hf2{background:#ece5d9;color:#1f1a1b;font-family:HFDisplay,Georgia,serif}
+body.hf2 .flora{display:none}
+body.hf2 .brand{color:#1f1a1b}
+body.hf2 .brand b{font:400 1.6rem/1 HFDisplay,Georgia,serif;letter-spacing:-.01em}
+body.hf2 .frame{box-shadow:0 0 0 6px #fbf8f2,0 0 0 7px #d3c6b3,0 30px 60px -24px rgba(60,40,25,.55)}
+body.hf2 .end,body.hf2 .note{background:linear-gradient(160deg,rgba(107,34,52,.95),rgba(42,12,20,.97))}
+body.hf2 .end h1,body.hf2 .note h1{font:italic 400 clamp(1.9rem,5vh,2.5rem)/1.1 HFDisplay,Georgia,serif;letter-spacing:-.01em}
+body.hf2 .end p,body.hf2 .note p{font-family:HFText,Georgia,serif;font-style:italic;font-size:1.2rem}
+body.hf2 .btn{border-radius:6px;color:#4f1726;font-family:HFSans,system-ui,sans-serif}
+body.hf2 .more,body.hf2 .foot small{font-family:HFSans,system-ui,sans-serif}
+body.hf2 .shop{border-radius:6px;background:#6b2234;font-family:HFSans,system-ui,sans-serif;letter-spacing:.01em}
+body.hf2 .shop:hover{background:#4f1726}
+body.hf2 .foot small{color:#6f6461;font-style:normal;font-size:.875rem}
+body.hf2 .bar i{background:#ead8a4}
+body.hf2.intro .open{opacity:0;visibility:hidden}
+.introHost{position:fixed;inset:0;z-index:50;transition:opacity .5s cubic-bezier(.22,1,.36,1)}
+.introHost.gone{opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -240,7 +259,39 @@ video{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; b
     var p=v.play(); setState("playing"); tap.hidden=false;
     if(p&&p.catch) p.catch(function(){setState(null); tap.hidden=true});
   }
+
+  // ---------- builder cards: the 3D opening shot, drawn from the buyer's own card ----------
+  // If anything here fails, the page simply keeps its normal "Tap to open" button.
+  var API="https://heartfully-builder.yaronb87.workers.dev";
+  function opening(){
+    if(!/^r[a-z0-9]{6}$/.test(vid)) return false;
+    document.body.classList.add("hf2","intro");
+    $("brand").innerHTML='<svg viewBox="0 0 100 100" aria-hidden="true" style="filter:drop-shadow(0 1px 1px rgba(60,10,20,.3))"><circle cx="50" cy="50" r="46" fill="#76222f"/><circle cx="50" cy="50" r="31" fill="none" stroke="rgba(30,0,8,.35)" stroke-width="2.4"/><text x="50" y="61" text-anchor="middle" font-family="HFDisplay,Georgia,serif" font-style="italic" font-size="38" fill="rgba(35,2,10,.55)">H</text></svg><b>Heartfully</b>';
+    var st=document.createElement("style"); var F="make/fonts/";
+    st.textContent="@font-face{font-family:HFDisplay;src:url("+F+"InstrumentSerif-Regular.woff) format('woff');font-weight:100 900;font-display:swap}@font-face{font-family:HFDisplay;src:url("+F+"InstrumentSerif-Italic.woff) format('woff');font-weight:100 900;font-style:italic;font-display:swap}@font-face{font-family:HFText;src:url("+F+"CrimsonPro-Regular.woff) format('woff');font-weight:100 599;font-display:swap}@font-face{font-family:HFText;src:url("+F+"CrimsonPro-Bold.woff) format('woff');font-weight:600 900;font-display:swap}@font-face{font-family:HFText;src:url("+F+"CrimsonPro-Italic.woff) format('woff');font-weight:100 900;font-style:italic;font-display:swap}@font-face{font-family:HFCaps;src:url("+F+"Italiana-Regular.woff) format('woff');font-display:swap}@font-face{font-family:HFSans;src:url("+F+"InstrumentSans-Regular.woff) format('woff');font-weight:100 549;font-display:swap}@font-face{font-family:HFSans;src:url("+F+"InstrumentSans-Bold.woff) format('woff');font-weight:550 900;font-display:swap}";
+    document.head.appendChild(st);
+    var host=document.createElement("div"); host.className="introHost"; document.body.appendChild(host);
+    function load(src){ return new Promise(function(res,rej){ var sc=document.createElement("script"); sc.src=src; sc.onload=res; sc.onerror=rej; document.head.appendChild(sc); }); }
+    var design=new Promise(function(res){
+      var done=false, fin=function(d){ if(!done){ done=true; res(d); } };
+      setTimeout(function(){ fin(null); },2500);
+      fetch(API+"/v/"+vid+"/card.json").then(function(r){ return r.ok ? r.json() : null; }).then(fin,function(){ fin(null); });
+    });
+    var giveUp=function(){ document.body.classList.remove("intro"); host.remove(); };
+    load("make/vendor/qrcode-generator-2.0.4.js").then(function(){ return load("make/engine.js"); }).then(function(){ return load("make/intro.js"); }).then(function(){ return design; }).then(function(d){
+      if(!d || !d.name) d=window.HFIntro.fromTitle(card.title);
+      if(!d.msg || !d.msg.length) d.msg=null;
+      var started=false, I=window.HFIntro.create(host, d, { qrUrl: location.href, onTap: function(){
+        // unlock sound on this tap (phones only allow it inside a tap), then let the camera finish its move
+        try{ var p=v.play(); if(p&&p.then) p.then(function(){ if(!started){ v.pause(); v.currentTime=0; } }).catch(function(){}); }catch(e){}
+        I.dive().then(function(){ started=true; host.classList.add("gone"); document.body.classList.remove("intro"); v.currentTime=0; start(); setTimeout(function(){ I.destroy(); host.remove(); },600); });
+      }});
+      return I.play();
+    }).catch(giveUp);
+    return true;
+  }
   openBtn.addEventListener("click",start);
+  opening();
   tap.addEventListener("click",function(){ if(v.paused){v.play(); setState("playing")} else {v.pause(); setState("paused")} });
   $("again").addEventListener("click",function(){v.currentTime=0; start()});
   $("retry").addEventListener("click",function(){setState(null); openBtn.hidden=false; v.load(); start()});
