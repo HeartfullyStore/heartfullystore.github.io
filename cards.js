@@ -2,6 +2,66 @@
 // To add a card: copy an entry, change the code, title, video URL and poster, then add the poster image next to this file.
 window.SHOP_URL = "https://www.etsy.com/shop/HeartfullyStore";
 window.CARDS = {
+  "iqwbnzo": {
+    title: "Merry Christmas, Mom",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/iqwbnzo/video.mp4",
+    poster: "iqwbnzo.jpg",
+    theme: { accent: "#e8c47a" }
+  },
+  "w0gi45n": {
+    title: "Merry Christmas, Dad",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/w0gi45n/video.mp4",
+    poster: "w0gi45n.jpg",
+    theme: { accent: "#e9c06a" }
+  },
+  "72bowo2": {
+    title: "Merry Christmas, Grandma",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/72bowo2/video.mp4",
+    poster: "72bowo2.jpg",
+    theme: { accent: "#e8a8a8" }
+  },
+  "bpvxbaa": {
+    title: "Merry Christmas, Grandpa",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/bpvxbaa/video.mp4",
+    poster: "bpvxbaa.jpg",
+    theme: { accent: "#e2bf72" }
+  },
+  "3kymykb": {
+    title: "Merry Christmas, My Love",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/3kymykb/video.mp4",
+    poster: "3kymykb.jpg",
+    theme: { accent: "#e6c27a" }
+  },
+  "55e2s6t": {
+    title: "Merry Christmas, Sweetheart",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/55e2s6t/video.mp4",
+    poster: "55e2s6t.jpg",
+    theme: { accent: "#ff9ebc" }
+  },
+  "72gdw4k": {
+    title: "Merry Christmas, Buddy",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/72gdw4k/video.mp4",
+    poster: "72gdw4k.jpg",
+    theme: { accent: "#f0c86a" }
+  },
+  "hc791ju": {
+    title: "Merry Christmas, Bestie",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/hc791ju/video.mp4",
+    poster: "hc791ju.jpg",
+    theme: { accent: "#f2c95a" }
+  },
+  "h8r7ezb": {
+    title: "Merry Christmas, Teacher",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/h8r7ezb/video.mp4",
+    poster: "h8r7ezb.jpg",
+    theme: { accent: "#e2c070" }
+  },
+  "75hll8h": {
+    title: "Merry Christmas, Coworker",
+    video: "https://f003.backblazeb2.com/file/GreetingCards/75hll8h/video.mp4",
+    poster: "75hll8h.jpg",
+    theme: { accent: "#e8cc86" }
+  },
   "mntrbhw": {
     title: "Happy New Year, Mom",
     video: "https://f003.backblazeb2.com/file/GreetingCards/mntrbhw/video.mp4",
@@ -87,10 +147,10 @@ window.CARDS = {
     theme: { accent: "#e6b85c" }
   },
   "s952k98": {
-    title: "Merry Christmas, My Love",
+    title: "Merry Christmas, Husband",
     video: "https://f003.backblazeb2.com/file/GreetingCards/s952k98/video.mp4",
     poster: "s952k98.jpg",
-    theme: { accent: "#e6b85c" }
+    theme: { accent: "#e8c47a" }
   },
   "mxm7ci9": {
     title: "Happy New Year, Grandpa",
