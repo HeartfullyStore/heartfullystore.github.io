@@ -472,6 +472,7 @@ body.typing .scene{height:30svh;min-height:210px}
       <label class="sr" for="codeIn">Your code</label>
       <input class="codein" id="codeIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="HF······" maxlength="14">
       <div class="msg" id="codeMsg" role="status"></div>
+      <p class="lead" style="margin-top:22px;font-size:.95em">Don&rsquo;t have a code yet? <a href="https://www.etsy.com/listing/4597607240" style="text-decoration:underline">Get your Personalized Video Card on Etsy</a> and the code arrives with your download.</p>
     </div>
 
     <!-- 1: design -->
@@ -816,7 +817,7 @@ body.typing .scene{height:30svh;min-height:210px}
     if(cur===-1) setMain(hasVideo() ? "Continue your card" : "Create your card", false);
     if(cur===0) setMain("Continue", false);
     if(cur===1) setMain(hasVideo() ? "Continue to print" : "Continue to your video", false);
-    if(cur===2) setMain(uploading ? "Uploading…" : "Continue to print", uploading || !hasVideo(), uploading);
+    if(cur===2) setMain(uploading ? "Uploading…" : (hasVideo() ? "Continue to print" : "Add a video to continue"), uploading || !hasVideo(), uploading);
     if(cur===3) setMain("Download your card", false);
   }
   $("backBtn").addEventListener("click",function(){ if(cur>1) go(cur-1); });
