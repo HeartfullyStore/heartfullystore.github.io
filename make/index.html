@@ -522,7 +522,7 @@ body.typing .scene{height:30svh;min-height:210px}
           </button>
           <label class="opt" id="drop" for="file">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M10 8.5v7l6-3.5z"/></svg></span>
-            <span><b id="dropT">Choose a video</b><small id="dropH">Or drag it here. MP4 or MOV, up to 200 MB.</small></span>
+            <span><b id="dropT">Choose a video</b><small id="dropH">Or drag it here. MP4 or MOV, up to 80 MB (about 3 minutes from a phone).</small></span>
             <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </label>
         </div>
@@ -606,7 +606,7 @@ body.typing .scene{height:30svh;min-height:210px}
   "use strict";
   var API = "https://heartfully-builder.yaronb87.workers.dev";
   var LANDING = "https://heartfullystore.github.io/";
-  var MAX = 200*1024*1024;
+  var MAX = 80*1024*1024;
   var $ = function(id){ return document.getElementById(id); };
   var E = window.CardEngine;
   var RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -968,7 +968,7 @@ body.typing .scene{height:30svh;min-height:210px}
     var ext=(f.name.split(".").pop()||"").toLowerCase();
     var okType = ["video/mp4","video/quicktime"].indexOf(f.type)>=0 || ["mp4","mov","m4v"].indexOf(ext)>=0;
     if(!okType){ msg("vMsg","This isn't a video file we can use. Choose an MP4 or MOV video.","err"); return; }
-    if(f.size>MAX){ msg("vMsg","This video is "+mb(f.size)+". The limit is 200 MB. Trim it or record a shorter one.","err"); return; }
+    if(f.size>MAX){ msg("vMsg","This video is "+mb(f.size)+". The limit is 80 MB. Trim it or record a shorter one.","err"); return; }
     if(f.size<20000){ msg("vMsg","This file looks empty. Choose another video.","err"); return; }
     if(DEMO){ return fakeUpload(f); }
     var codec = await codecOf(f);
@@ -1021,7 +1021,7 @@ body.typing .scene{height:30svh;min-height:210px}
       msg("vMsg", note ? note.trim() : "", note?"warn":"ok");
       finishUpUI();
     }catch(e){
-      var m = e.message==="used" ? "This code was already used for a finished card." : e.message==="size" ? "This video is too large. The limit is 200 MB." : e.message==="busy" ? "Too many uploads today. Try again tomorrow, or message us on Etsy and we'll help right away." : "The upload didn't finish. Check your connection and choose the video again.";
+      var m = e.message==="used" ? "This code was already used for a finished card." : e.message==="size" ? "This video is too large. The limit is 80 MB." : e.message==="busy" ? "Our upload line is full right now. Try again tomorrow, or message us on Etsy and we'll help right away." : "The upload didn't finish. Check your connection and choose the video again.";
       uploading=false; showVideoState(); msg("vMsg",m,"err");
     }
   }
