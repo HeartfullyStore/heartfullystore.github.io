@@ -4,12 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#faf8f5">
+<meta name="theme-color" content="#ece5d9">
 <title>Your greeting | HeartfullyStore</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
-@font-face{font-family:"Lora";src:url("https://cdn.jsdelivr.net/npm/@fontsource-variable/lora@5.1.1/files/lora-latin-wght-normal.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
-@font-face{font-family:"Lora";src:url("https://cdn.jsdelivr.net/npm/@fontsource-variable/lora@5.1.1/files/lora-latin-wght-italic.woff2") format("woff2");font-weight:400 700;font-style:italic;font-display:swap}
 
 :root{
   /* HeartfullyStore brand: deep plum, warm cream, dusty rose */
@@ -241,6 +239,7 @@ body.hf2.intro .open{opacity:0;visibility:hidden}
   }
 
   if(!card){
+    atelier();
     document.title="Greeting not found | HeartfullyStore";
     showNote("missing","We can’t find this greeting","The link looks incomplete. Scan the QR code on your card again, and make sure the whole code is in view.",false);
     return;
@@ -263,13 +262,16 @@ body.hf2.intro .open{opacity:0;visibility:hidden}
   // ---------- builder cards: the 3D opening shot, drawn from the buyer's own card ----------
   // If anything here fails, the page simply keeps its normal "Tap to open" button.
   var API="https://heartfully-builder.yaronb87.workers.dev";
-  function opening(){
-    if(!/^r[a-z0-9]{6,12}$/.test(vid)) return false;
-    document.body.classList.add("hf2","intro");
+  function atelier(){
+    document.body.classList.add("hf2");
     $("brand").innerHTML='<svg viewBox="0 0 100 100" aria-hidden="true" style="filter:drop-shadow(0 1px 1px rgba(60,10,20,.3))"><circle cx="50" cy="50" r="46" fill="#76222f"/><circle cx="50" cy="50" r="31" fill="none" stroke="rgba(30,0,8,.35)" stroke-width="2.4"/><text x="50" y="61" text-anchor="middle" font-family="HFDisplay,Georgia,serif" font-style="italic" font-size="38" fill="rgba(35,2,10,.55)">H</text></svg><b>Heartfully</b>';
     var st=document.createElement("style"); var F="make/fonts/";
     st.textContent="@font-face{font-family:HFDisplay;src:url("+F+"InstrumentSerif-Regular.woff) format('woff');font-weight:100 900;font-display:swap}@font-face{font-family:HFDisplay;src:url("+F+"InstrumentSerif-Italic.woff) format('woff');font-weight:100 900;font-style:italic;font-display:swap}@font-face{font-family:HFText;src:url("+F+"CrimsonPro-Regular.woff) format('woff');font-weight:100 599;font-display:swap}@font-face{font-family:HFText;src:url("+F+"CrimsonPro-Bold.woff) format('woff');font-weight:600 900;font-display:swap}@font-face{font-family:HFText;src:url("+F+"CrimsonPro-Italic.woff) format('woff');font-weight:100 900;font-style:italic;font-display:swap}@font-face{font-family:HFCaps;src:url("+F+"Italiana-Regular.woff) format('woff');font-display:swap}@font-face{font-family:HFSans;src:url("+F+"InstrumentSans-Regular.woff) format('woff');font-weight:100 549;font-display:swap}@font-face{font-family:HFSans;src:url("+F+"InstrumentSans-Bold.woff) format('woff');font-weight:550 900;font-display:swap}";
     document.head.appendChild(st);
+  }
+  function opening(){
+    if(!/^r[a-z0-9]{6,12}$/.test(vid)) return false;
+    document.body.classList.add("intro");
     var host=document.createElement("div"); host.className="introHost"; document.body.appendChild(host);
     function load(src){ return new Promise(function(res,rej){ var sc=document.createElement("script"); sc.src=src; sc.onload=res; sc.onerror=rej; document.head.appendChild(sc); }); }
     var design=new Promise(function(res){
@@ -291,6 +293,7 @@ body.hf2.intro .open{opacity:0;visibility:hidden}
     return true;
   }
   openBtn.addEventListener("click",start);
+  atelier();
   opening();
   tap.addEventListener("click",function(){ if(v.paused){v.play(); setState("playing")} else {v.pause(); setState("paused")} });
   $("again").addEventListener("click",function(){v.currentTime=0; start()});
