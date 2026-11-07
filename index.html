@@ -225,7 +225,7 @@ body.hf2.intro .open{opacity:0;visibility:hidden}
   var card=(window.CARDS||{})[code];
   // self-serve builder videos (Cloudflare R2 via the Worker): ?v=r123abc&t=Title
   var vid=(q.get("v")||"").trim().toLowerCase();
-  if(/^r[a-z0-9]{6}$/.test(vid)){
+  if(/^r[a-z0-9]{6,12}$/.test(vid)){
     card={title:(q.get("t")||"").slice(0,60)||"A message just for you", video:"https://heartfully-builder.yaronb87.workers.dev/v/"+vid+"/video.mp4", poster:"", theme:{}};
   }
   // personalized orders: any 7-character code has its video at the standard address, title from ?t=
@@ -264,7 +264,7 @@ body.hf2.intro .open{opacity:0;visibility:hidden}
   // If anything here fails, the page simply keeps its normal "Tap to open" button.
   var API="https://heartfully-builder.yaronb87.workers.dev";
   function opening(){
-    if(!/^r[a-z0-9]{6}$/.test(vid)) return false;
+    if(!/^r[a-z0-9]{6,12}$/.test(vid)) return false;
     document.body.classList.add("hf2","intro");
     $("brand").innerHTML='<svg viewBox="0 0 100 100" aria-hidden="true" style="filter:drop-shadow(0 1px 1px rgba(60,10,20,.3))"><circle cx="50" cy="50" r="46" fill="#76222f"/><circle cx="50" cy="50" r="31" fill="none" stroke="rgba(30,0,8,.35)" stroke-width="2.4"/><text x="50" y="61" text-anchor="middle" font-family="HFDisplay,Georgia,serif" font-style="italic" font-size="38" fill="rgba(35,2,10,.55)">H</text></svg><b>Heartfully</b>';
     var st=document.createElement("style"); var F="make/fonts/";
